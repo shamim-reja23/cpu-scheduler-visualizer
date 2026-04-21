@@ -45,20 +45,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onReset
 }) => {
   return (
-    <aside className="w-[300px] bg-white border-r border-[#E5E7EB] flex flex-col p-6 h-full overflow-y-auto shrink-0">
+    <aside className="w-75 bg-white border-r border-brand-border flex flex-col p-6 h-full overflow-y-auto shrink-0">
       <div className="flex items-center gap-2.5 mb-8">
-        <div className="w-8 h-8 bg-[#2563EB] rounded-lg"></div>
+        <div className="w-8 h-8 bg-brand-primary rounded-lg"></div>
         <span className="font-bold text-lg tracking-tight">CPU Scheduler</span>
       </div>
 
       <div className="flex items-center justify-between mb-2 px-1">
-        <label className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280]">Algorithm</label>
+        <label className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Algorithm</label>
         <button 
           onClick={() => { onSetCompareMode(!compareMode); onReset(); }}
-          className="flex items-center gap-1.5 px-1.5 py-1 bg-[#F9FAFB] rounded-full border border-[#E5E7EB] hover:bg-[#F3F4F6] transition-all"
+          className="flex items-center gap-1.5 px-1.5 py-1 bg-brand-bg rounded-full border border-brand-border hover:bg-[#F3F4F6] transition-all"
         >
-          <span className={cn("text-[8px] font-bold uppercase px-1.5 py-0.5 rounded-full", !compareMode ? "bg-[#2563EB] text-white shadow-sm" : "text-[#6B7280]")}>Single</span>
-          <span className={cn("text-[8px] font-bold uppercase px-1.5 py-0.5 rounded-full", compareMode ? "bg-[#2563EB] text-white shadow-sm" : "text-[#6B7280]")}>Compare</span>
+          <span className={cn("text-[8px] font-bold uppercase px-1.5 py-0.5 rounded-full", !compareMode ? "bg-brand-primary text-white shadow-sm" : "text-brand-muted")}>Single</span>
+          <span className={cn("text-[8px] font-bold uppercase px-1.5 py-0.5 rounded-full", compareMode ? "bg-brand-primary text-white shadow-sm" : "text-brand-muted")}>Compare</span>
         </button>
       </div>
 
@@ -66,7 +66,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <select 
           value={algorithm}
           onChange={(e) => { onSetAlgorithm(e.target.value as AlgorithmType); onReset(); }}
-          className="w-full p-2.5 bg-white border border-[#E5E7EB] rounded-lg text-sm mb-6 outline-none focus:border-[#2563EB] transition-colors"
+          className="w-full p-2.5 bg-white border border-brand-border rounded-lg text-sm mb-6 outline-none focus:border-brand-primary transition-colors"
         >
           <option value="FCFS">First Come First Serve (FCFS)</option>
           <option value="SJF">Shortest Job First (SJF)</option>
@@ -82,7 +82,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={alg} 
               className={cn(
                 "flex items-center gap-2 p-1.5 border rounded-lg cursor-pointer transition-all",
-                selectedAlgorithms.includes(alg) ? "border-[#2563EB] bg-blue-50/30" : "border-[#E5E7EB] hover:border-[#D1D5DB]"
+                selectedAlgorithms.includes(alg) ? "border-brand-primary bg-blue-50/30" : "border-brand-border hover:border-[#D1D5DB]"
               )}
             >
               <input 
@@ -99,7 +99,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }
                 }}
               />
-              <span className={cn("text-[9px] font-bold uppercase truncate", selectedAlgorithms.includes(alg) ? "text-[#2563EB]" : "text-[#6B7280]")}>
+              <span className={cn("text-[9px] font-bold uppercase truncate", selectedAlgorithms.includes(alg) ? "text-brand-primary" : "text-brand-muted")}>
                 {alg === 'Priority-Preemptive' ? 'Priority (P)' : alg}
               </span>
             </label>
@@ -109,18 +109,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {((!compareMode && algorithm === 'RR') || (compareMode && selectedAlgorithms.includes('RR'))) && (
         <div className="mb-6 px-1">
-          <label className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-2 block">Time Quantum</label>
+          <label className="text-[10px] font-bold uppercase tracking-widest text-brand-muted mb-2 block">Time Quantum</label>
           <input 
             type="number" 
             min={1} 
             value={quantum} 
             onChange={(e) => { onSetQuantum(Number(e.target.value)); onReset(); }}
-            className="w-full p-2.5 bg-white border border-[#E5E7EB] rounded-lg text-sm outline-none focus:border-[#2563EB] transition-colors"
+            className="w-full p-2.5 bg-white border border-brand-border rounded-lg text-sm outline-none focus:border-brand-primary transition-colors"
           />
         </div>
       )}
 
-      <label className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-3 px-1">Process Units</label>
+      <label className="text-[10px] font-bold uppercase tracking-widest text-brand-muted mb-3 px-1">Process Units</label>
       <div className="space-y-3 mb-6">
         <div className="flex flex-col gap-2.5">
            <div className="grid grid-cols-3 gap-2 px-3">
@@ -129,10 +129,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
              <span className="text-[9px] font-bold text-[#9CA3AF] uppercase text-center">Priority</span>
            </div>
            {processes.map((p) => (
-             <div key={p.id} className="flex flex-col p-3 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg group">
+             <div key={p.id} className="flex flex-col p-3 bg-brand-bg border border-brand-border rounded-lg group">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-xs font-bold">{p.id} Unit</span>
-                  <button onClick={() => onRemoveProcess(p.id)} className="text-[#6B7280] hover:text-red-500 transition-colors">
+                  <button onClick={() => onRemoveProcess(p.id)} className="text-brand-muted hover:text-red-500 transition-colors">
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -142,21 +142,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     placeholder="0"
                     value={p.arrivalTime === '' ? '' : p.arrivalTime} 
                     onChange={(e) => onUpdateProcess(p.id, 'arrivalTime', e.target.value === '' ? '' : Number(e.target.value))}
-                    className="p-1.5 border border-[#E5E7EB] rounded text-[11px] text-center outline-none focus:border-[#2563EB] transition-all bg-white"
+                    className="p-1.5 border border-brand-border rounded text-[11px] text-center outline-none focus:border-brand-primary transition-all bg-white"
                   />
                   <input 
                     type="number" 
                     placeholder="0"
                     value={p.burstTime === '' ? '' : p.burstTime} 
                     onChange={(e) => onUpdateProcess(p.id, 'burstTime', e.target.value === '' ? '' : Number(e.target.value))}
-                    className="p-1.5 border border-[#E5E7EB] rounded text-[11px] text-center outline-none focus:border-[#2563EB] transition-all bg-white"
+                    className="p-1.5 border border-brand-border rounded text-[11px] text-center outline-none focus:border-brand-primary transition-all bg-white"
                   />
                   <input 
                     type="number" 
                     placeholder="1"
                     value={p.priority === '' ? '' : p.priority} 
                     onChange={(e) => onUpdateProcess(p.id, 'priority', e.target.value === '' ? '' : Number(e.target.value))}
-                    className="p-1.5 border border-[#E5E7EB] rounded text-[11px] text-center outline-none focus:border-[#2563EB] transition-all bg-white"
+                    className="p-1.5 border border-brand-border rounded text-[11px] text-center outline-none focus:border-brand-primary transition-all bg-white"
                   />
                 </div>
              </div>
@@ -164,15 +164,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
         <button 
           onClick={onAddProcess}
-          className="w-full p-2.5 border border-dashed border-[#E5E7EB] text-[#6B7280] rounded-lg text-xs font-bold uppercase tracking-widest hover:border-[#2563EB] hover:text-[#2563EB] transition-all flex items-center justify-center gap-2"
+          className="w-full p-2.5 border border-dashed border-brand-border text-brand-muted rounded-lg text-xs font-bold uppercase tracking-widest hover:border-brand-primary hover:text-brand-primary transition-all flex items-center justify-center gap-2"
         >
           <Plus className="w-4 h-4" /> Add Unit
         </button>
       </div>
 
-      <div className="mt-auto pt-6 border-t border-[#E5E7EB]">
+      <div className="mt-auto pt-6 border-t border-brand-border">
         <div className="mb-4">
-           <label className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-2 block">Playback Speed</label>
+           <label className="text-[10px] font-bold uppercase tracking-widest text-brand-muted mb-2 block">Playback Speed</label>
            <div className="flex items-center gap-3">
              <input 
                type="range" 
@@ -181,14 +181,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                step={0.1} 
                value={playbackSpeed}
                onChange={(e) => onSetPlaybackSpeed(Number(e.target.value))}
-               className="flex-1 accent-[#2563EB] h-1"
+               className="flex-1 accent-brand-primary h-1"
              />
-             <span className="text-[10px] font-mono text-[#6B7280] w-6">{playbackSpeed.toFixed(1)}x</span>
+             <span className="text-[10px] font-mono text-brand-muted w-6">{playbackSpeed.toFixed(1)}x</span>
            </div>
         </div>
         <button 
           onClick={onTogglePlay}
-          className="w-full bg-[#111827] text-white p-3 rounded-lg font-bold text-sm hover:bg-black transition-colors"
+          className="w-full bg-brand-text text-white p-3 rounded-lg font-bold text-sm hover:bg-black transition-colors"
         >
           {isPlaying ? 'Pause Simulation' : 'Execute Simulation'}
         </button>

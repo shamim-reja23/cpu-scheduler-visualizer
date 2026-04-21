@@ -98,7 +98,7 @@ export default function App() {
   const mainResults = resultsArray[0];
 
   return (
-    <div className="flex h-screen bg-[#F9FAFB] text-[#111827] font-sans overflow-hidden">
+    <div className="flex h-screen bg-brand-bg text-brand-text font-sans overflow-hidden">
       <Sidebar 
         processes={processes}
         algorithm={algorithm}
