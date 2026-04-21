@@ -23,7 +23,7 @@ export default function App() {
   const [quantum, setQuantum] = useState<number>(2);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1.6);
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   const resultsMap = useMemo<Record<string, SimulationResults>>(() => {
