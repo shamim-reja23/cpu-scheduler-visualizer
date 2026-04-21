@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 import { AlgorithmType, UIProcess, SimulationResults } from './types';
 import { calculateScheduling } from './lib/algorithms';
 import { generateColor, cn } from './lib/utils';
@@ -23,6 +24,7 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   const resultsMap = useMemo<Record<string, SimulationResults>>(() => {
     const sanitizedProcesses = processes.map(p => ({
@@ -98,7 +100,21 @@ export default function App() {
   const mainResults = resultsArray[0];
 
   return (
-    <div className="flex h-screen bg-brand-bg text-brand-text font-sans overflow-hidden">
+    <div className="flex flex-col md:flex-row h-screen bg-brand-bg text-brand-text font-sans overflow-hidden relative">
+      {/* Mobile Header */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-brand-border z-40">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-brand-primary rounded"></div>
+          <span className="font-bold text-sm tracking-tight">CPU Scheduler</span>
+        </div>
+        <button 
+          onClick={() => setShowMobileSidebar(!showMobileSidebar)}
+          className="p-2 hover:bg-brand-bg rounded-lg transition-colors"
+        >
+          {showMobileSidebar ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
       <Sidebar 
         processes={processes}
         algorithm={algorithm}
@@ -107,6 +123,8 @@ export default function App() {
         quantum={quantum}
         playbackSpeed={playbackSpeed}
         isPlaying={isPlaying}
+        isOpen={showMobileSidebar}
+        onClose={() => setShowMobileSidebar(false)}
         onUpdateProcess={updateProcess}
         onRemoveProcess={removeProcess}
         onAddProcess={addProcess}
@@ -119,7 +137,15 @@ export default function App() {
         onReset={resetSimulation}
       />
 
-      <main className="flex-1 p-8 h-full overflow-y-auto space-y-8 flex flex-col custom-scrollbar">
+      {/* Mobile Sidebar Overlay */}
+      {showMobileSidebar && (
+        <div 
+          className="fixed inset-0 bg-black/20 z-40 md:hidden backdrop-blur-[2px]"
+          onClick={() => setShowMobileSidebar(false)}
+        />
+      )}
+
+      <main className="flex-1 p-4 md:p-8 h-full overflow-y-auto space-y-4 md:space-y-8 flex flex-col custom-scrollbar">
         <ControlsBar 
           currentTime={currentTime}
           maxTime={maxTime}
@@ -131,7 +157,7 @@ export default function App() {
           onStepForward={() => { setIsPlaying(false); setCurrentTime(prev => Math.min(maxTime, Math.ceil(prev + 1))); }}
         />
 
-        <div className={cn("grid gap-6", compareMode && resultsArray.length > 2 ? "grid-cols-2" : "grid-cols-1")}>
+        <div className={cn("grid gap-4 md:gap-6", compareMode && resultsArray.length > 2 ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1")}>
           {(Object.entries(resultsMap) as [string, SimulationResults][]).map(([algName, algResults]) => (
             <GanttChart 
               key={algName}
@@ -144,30 +170,16 @@ export default function App() {
           ))}
         </div>
 
-        <ProcessTable 
-          results={mainResults}
-          currentTime={currentTime}
-          compareMode={compareMode}
-          algorithmName={Object.keys(resultsMap)[0]}
-        />
+        <div className="flex-1 min-h-100">
+          <ProcessTable 
+            results={mainResults}
+            currentTime={currentTime}
+            compareMode={compareMode}
+            algorithmName={Object.keys(resultsMap)[0]}
+          />
+        </div>
       </main>
 
-      <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-          height: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #E5E7EB;
-          border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #D1D5DB;
-        }
-      `}</style>
     </div>
   );
 }

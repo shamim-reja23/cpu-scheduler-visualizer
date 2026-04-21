@@ -21,23 +21,23 @@ export const GanttChart: React.FC<GanttChartProps> = ({
 
   return (
     <div className="bg-white border border-brand-border rounded-2xl p-6 shadow-sm flex flex-col gap-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col min-[450px]:flex-row justify-between items-start min-[450px]:items-center gap-3">
         <div className="flex items-center gap-2">
-          <div className="px-2 py-1 bg-brand-bg border border-brand-border rounded text-[10px] font-mono font-bold text-brand-muted">
+          <div className="px-2 py-1 bg-brand-bg border border-brand-border rounded text-[9px] md:text[10px] font-mono font-bold text-brand-muted">
             {algName}
           </div>
-          <h4 className="text-xs font-bold text-brand-text">
+          <h4 className="text-[11px] md:text-xs font-bold text-brand-text">
             {displayName}
           </h4>
         </div>
-        <div className="flex gap-4">
+        <div className="lex gap-4 w-full min-[450px]:w-auto justify-between min-[450px]:justify-end">
            <div className="flex flex-col items-end">
-              <span className="text-[8px] font-bold text-[#9CA3AF] uppercase">Avg Wait</span>
-              <span className="text-xs font-bold text-brand-primary">{algResults.averageWaitingTime.toFixed(1)}ms</span>
+              <span className="text-[7px] md:text-[8px] font-bold text-[#9CA3AF] uppercase">Avg Wait</span>
+              <span className="text-[10px] md:text-xs font-bold text-brand-primary">{algResults.averageWaitingTime.toFixed(1)}ms</span>
            </div>
            <div className="flex flex-col items-end border-l border-brand-border pl-4">
-              <span className="text-[8px] font-bold text-[#9CA3AF] uppercase">Avg Turnaround</span>
-              <span className="text-xs font-bold text-brand-primary">{algResults.averageTurnaroundTime.toFixed(1)}ms</span>
+              <span className="text-[7px] md:text-[8px] font-bold text-[#9CA3AF] uppercase">Avg Turnaround</span>
+              <span className="text-[10px] md:text-xs font-bold text-brand-primary">{algResults.averageTurnaroundTime.toFixed(1)}ms</span>
            </div>
         </div>
       </div>

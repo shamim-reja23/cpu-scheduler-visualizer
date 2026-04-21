@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, X } from 'lucide-react';
 import { AlgorithmType, UIProcess } from '../types';
 import { cn } from '../lib/utils';
 
@@ -11,6 +11,8 @@ interface SidebarProps {
   quantum: number;
   playbackSpeed: number;
   isPlaying: boolean;
+  isOpen?: boolean;
+  onClose?: boolean;
   onUpdateProcess: (id: string, field: keyof UIProcess, value: any) => void;
   onRemoveProcess: (id: string) => void;
   onAddProcess: () => void;
@@ -33,6 +35,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   quantum,
   playbackSpeed,
   isPlaying,
+  isOpen,
+  onClose,
   onUpdateProcess,
   onRemoveProcess,
   onAddProcess,
@@ -45,10 +49,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onReset
 }) => {
   return (
-    <aside className="w-75 bg-white border-r border-brand-border flex flex-col p-6 h-full overflow-y-auto shrink-0">
-      <div className="flex items-center gap-2.5 mb-8">
-        <div className="w-8 h-8 bg-brand-primary rounded-lg"></div>
-        <span className="font-bold text-lg tracking-tight">CPU Scheduler</span>
+    <aside className={cn("w-75 bg-white border-r border-brand-border flex flex-col p-6 h-full overflow-y-auto shrink-0 transition-transform duration-300 z-50", 
+    "fixed md:relative inset-y-0 left-0 md:translate-x-0", 
+    isOpen ? "translate-x-0" : "-translate-x-full"
+    )}>
+      <div className="flex items-center justify-between gap-2.5 mb-8">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 bg-brand-primary rounded-lg"></div>
+          <span className="font-bold text-lg tracking-tight">CPU Scheduler</span>
+        </div>
+        <button 
+          onClick={onClose}
+          className="md:hidden p-2 hover:bg-brand-bg rounded-lg transition-colors"
+        >
+          <X className="w-5 h-5 text-brand-muted" />
+        </button>
       </div>
 
       <div className="flex items-center justify-between mb-2 px-1">
