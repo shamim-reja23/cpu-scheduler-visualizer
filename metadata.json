@@ -1,0 +1,6 @@
+{
+  "name": "CPU Scheduler Visualizer Pro",
+  "description": "An interactive, modern dashboard to visualize and compare CPU scheduling algorithms like FCFS, SJF, SRTF, Round Robin, and Priority Scheduling with real-time Gantt charts and performance metrics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
